@@ -466,6 +466,7 @@ html, body {
 }
 
 .envelope-wrapper.opening .env-letter-peek {
+  z-index: 3;
   transform: translateY(-90px);
 }
 
