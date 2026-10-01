@@ -259,12 +259,12 @@ html, body {
 
 .peek-photo {
   position: absolute;
-  width: 110px;
-  height: 140px;
+  width: 120px;
+  height: 155px;
   background: #ffffff;
-  padding: 5px 5px 18px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  border-radius: 2px;
+  padding: 6px 6px 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  border-radius: 3px;
   transition: transform 0.8s cubic-bezier(0.3, 1.2, 0.4, 1);
 }
 
@@ -272,6 +272,7 @@ html, body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 15%;
   display: block;
 }
 
@@ -466,15 +467,15 @@ html, body {
 }
 
 .envelope-wrapper.opening .env-letter-peek {
-  transform: translateY(-90px);
+  transform: translateY(-130px);
 }
 
 .envelope-wrapper.opening .peek-left {
-  transform: rotate(-14deg) translateY(-20px);
+  transform: rotate(-12deg) translateY(-20px) scale(1.06);
 }
 
 .envelope-wrapper.opening .peek-right {
-  transform: rotate(14deg) translateY(-20px);
+  transform: rotate(12deg) translateY(-20px) scale(1.06);
 }
 
 
@@ -613,90 +614,129 @@ html, body {
   top: 15px;
   left: 50%;
   transform: translateX(-50%);
-  width: 260px;
-  height: 220px;
+  width: 280px;
+  height: 260px;
   z-index: 10;
 }
 
 .open-env-body {
   position: relative;
   width: 100%;
-  height: 130px;
-  margin-top: 75px;
-  background: linear-gradient(180deg, #6b7754, #5a6645);
+  height: 120px;
+  margin-top: 105px;
+  background: linear-gradient(180deg, #626e4c, #525d3d);
   border-radius: 4px;
-  box-shadow: 0 10px 25px rgba(45, 52, 35, 0.35);
+  box-shadow: 0 12px 28px rgba(35, 42, 26, 0.35);
 }
 
 .open-flap-top {
   position: absolute;
-  top: -72px;
+  top: -102px;
   left: 0;
   width: 100%;
-  height: 76px;
+  height: 108px;
   clip-path: polygon(0 100%, 50% 0, 100% 100%);
-  background: linear-gradient(0deg, #6c7855, #7d8c63);
+  background: linear-gradient(0deg, #65714e, #7a8860);
   z-index: 1;
 }
 
 /* Photos Peeking Out from Envelope */
 .env-peeking-photos {
   position: absolute;
-  top: -62px;
-  left: 10px;
-  right: 10px;
-  height: 135px;
-  z-index: 2;
+  top: -95px;
+  left: 4px;
+  right: 4px;
+  height: 185px;
+  z-index: 6;
 }
 
 .polaroid-peek {
   position: absolute;
-  width: 104px;
-  height: 130px;
+  width: 124px;
+  height: 165px;
   background: #ffffff;
-  padding: 5px 5px 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  border-radius: 2px;
+  padding: 6px 6px 20px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 3px;
   cursor: pointer;
-  transition: transform 0.3s ease, z-index 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, z-index 0.3s ease;
 }
 
 .polaroid-peek:hover {
-  transform: scale(1.08) translateY(-10px) !important;
-  z-index: 15;
+  transform: scale(1.12) translateY(-14px) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+  z-index: 25;
 }
 
 .polaroid-peek .polaroid-inner {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #333;
+  background: #222;
+  border-radius: 1px;
 }
 
 .polaroid-peek img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 15%;
   display: block;
+  transition: transform 0.5s ease;
+}
+
+.polaroid-peek:hover img {
+  transform: scale(1.06);
 }
 
 .polaroid-peek.peek-1 {
-  left: 8px;
+  left: 6px;
   transform: rotate(-6deg);
 }
 
 .polaroid-peek.peek-2 {
-  right: 8px;
-  transform: rotate(7deg);
+  right: 6px;
+  transform: rotate(6deg);
+}
+
+/* Opening slide-up animation for peeking photos */
+.collage-screen.active .polaroid-peek.peek-1 {
+  animation: peekRiseLeft 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.collage-screen.active .polaroid-peek.peek-2 {
+  animation: peekRiseRight 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.12s forwards;
+}
+
+@keyframes peekRiseLeft {
+  0% {
+    transform: translateY(75px) rotate(0deg) scale(0.85);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(0) rotate(-6deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes peekRiseRight {
+  0% {
+    transform: translateY(75px) rotate(0deg) scale(0.85);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(0) rotate(6deg) scale(1);
+    opacity: 1;
+  }
 }
 
 /* Floral Spray across Envelope Edge */
 .envelope-floral-spray {
   position: absolute;
-  top: 48px;
-  left: -20px;
-  width: 290px;
-  height: 90px;
+  top: 60px;
+  left: -25px;
+  width: 330px;
+  height: 95px;
   z-index: 8;
   pointer-events: none;
 }
@@ -705,7 +745,7 @@ html, body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: drop-shadow(0 6px 12px rgba(25, 0, 5, 0.35));
+  filter: drop-shadow(0 8px 16px rgba(25, 0, 5, 0.38));
 }
 
 
@@ -1373,6 +1413,7 @@ html, body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 20%;
   display: block;
   transition: transform 0.4s ease;
 }
@@ -1416,6 +1457,10 @@ html, body {
 .polaroid-story .polaroid-photo-wrap {
   width: 100%;
   height: 145px;
+}
+
+.polaroid-story .polaroid-photo-wrap img {
+  object-position: center 15%;
 }
 
 .polaroid-story .polaroid-caption {
