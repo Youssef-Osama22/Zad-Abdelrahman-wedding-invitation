@@ -1152,12 +1152,22 @@ html, body {
 .cd-caption {
   display: flex;
   align-items: center;
-  gap: 5px;
-  margin-top: 6px;
-  padding: 3px 8px;
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 10px;
+  gap: 6px;
+  margin-top: 7px;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(200, 163, 85, 0.45);
+  border-radius: 12px;
   width: fit-content;
+  max-width: 172px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  transition: all 0.25s ease;
+}
+
+.cd-jewel-case:hover .cd-caption {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: var(--burgundy-main);
 }
 
 .cd-pulse-dot {
@@ -1165,6 +1175,7 @@ html, body {
   height: 6px;
   border-radius: 50%;
   background: var(--burgundy-main);
+  flex-shrink: 0;
 }
 
 .cd-jewel-case.playing .cd-pulse-dot {
@@ -1173,9 +1184,14 @@ html, body {
 }
 
 .cd-track-text {
+  font-family: var(--font-sans);
   font-size: 9.5px;
-  font-weight: 500;
-  color: var(--text-muted);
+  font-weight: 600;
+  color: var(--burgundy-deep);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.3px;
 }
 
 

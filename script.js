@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnBackCover = document.getElementById('btn-back-cover');
 
   // Navigation & Music
+  const weddingAudio = document.getElementById('wedding-audio');
   const btnMusicToggle = document.getElementById('btn-music-toggle');
   const musicLabel = document.getElementById('music-label');
   const cdPlayerModule = document.getElementById('cd-player-module');
@@ -92,6 +93,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     envelopeWrap.classList.add('opening');
 
+    // Attempt to start Lana Del Rey soundtrack within direct user gesture
+    if (weddingAudio && weddingAudio.paused) {
+      weddingAudio.play().then(() => {
+        isMusicPlaying = true;
+        updateMusicUI(true);
+      }).catch(err => {
+        console.log('Audio autoplay scheduled on reveal:', err);
+      });
+    }
+
     // Subtle audio chime feedback
     playGentleChime();
 
@@ -104,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const scrollWrap = document.querySelector('.collage-scroll-wrapper');
       if (scrollWrap) scrollWrap.scrollTop = 0;
 
-      // Start music automatically upon invitation opening
+      // Start music automatically upon invitation opening if not already playing
       if (!isMusicPlaying) {
         startMusic();
       }
@@ -225,28 +236,57 @@ document.addEventListener('DOMContentLoaded', () => {
     melodyStep = (melodyStep + 1) % MELODY_SEQUENCE.length;
   }
 
-  function startMusic() {
-    initAudioContext();
-    isMusicPlaying = true;
-    btnMusicToggle.classList.add('playing');
-    cdPlayerModule.classList.add('playing');
-    compactDisc.classList.add('spinning');
-    musicLabel.textContent = 'Mute';
-    cdStatusText.textContent = 'Playing ♫';
+  function updateMusicUI(isPlaying) {
+    if (btnMusicToggle) {
+      if (isPlaying) btnMusicToggle.classList.add('playing');
+      else btnMusicToggle.classList.remove('playing');
+    }
+    if (cdPlayerModule) {
+      if (isPlaying) cdPlayerModule.classList.add('playing');
+      else cdPlayerModule.classList.remove('playing');
+    }
+    if (compactDisc) {
+      if (isPlaying) compactDisc.classList.add('spinning');
+      else compactDisc.classList.remove('spinning');
+    }
+    if (musicLabel) {
+      musicLabel.textContent = isPlaying ? 'Mute' : 'Music';
+    }
+    if (cdStatusText) {
+      cdStatusText.textContent = isPlaying ? 'Young & Beautiful ♫' : 'Young & Beautiful - Lana Del Rey';
+    }
+  }
 
-    scheduleNextNotes();
-    if (synthInterval) clearInterval(synthInterval);
-    synthInterval = setInterval(scheduleNextNotes, 1100);
+  function startMusic() {
+    isMusicPlaying = true;
+    updateMusicUI(true);
+
+    if (weddingAudio) {
+      const playPromise = weddingAudio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(err => {
+          console.warn('Audio tag playback prevented or failed, using synth fallback:', err);
+          initAudioContext();
+          scheduleNextNotes();
+          if (synthInterval) clearInterval(synthInterval);
+          synthInterval = setInterval(scheduleNextNotes, 1100);
+        });
+      }
+    } else {
+      initAudioContext();
+      scheduleNextNotes();
+      if (synthInterval) clearInterval(synthInterval);
+      synthInterval = setInterval(scheduleNextNotes, 1100);
+    }
   }
 
   function stopMusic() {
     isMusicPlaying = false;
-    btnMusicToggle.classList.remove('playing');
-    cdPlayerModule.classList.remove('playing');
-    compactDisc.classList.remove('spinning');
-    musicLabel.textContent = 'Music';
-    cdStatusText.textContent = 'Click to Play';
+    updateMusicUI(false);
 
+    if (weddingAudio) {
+      weddingAudio.pause();
+    }
     if (synthInterval) {
       clearInterval(synthInterval);
       synthInterval = null;
@@ -263,6 +303,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (btnMusicToggle) btnMusicToggle.addEventListener('click', toggleMusic);
   if (cdPlayerModule) cdPlayerModule.addEventListener('click', toggleMusic);
+
+  if (weddingAudio) {
+    weddingAudio.addEventListener('play', () => {
+      isMusicPlaying = true;
+      updateMusicUI(true);
+    });
+    weddingAudio.addEventListener('pause', () => {
+      if (!synthInterval) {
+        isMusicPlaying = false;
+        updateMusicUI(false);
+      }
+    });
+  }
 
 
   // =========================================================================
