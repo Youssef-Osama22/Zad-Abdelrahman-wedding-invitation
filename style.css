@@ -79,10 +79,11 @@ html, body {
 
 /* Floating ambient rose petals */
 .floating-petals-container {
-  position: absolute;
+  position: fixed;
   inset: 0;
   overflow: hidden;
   pointer-events: none;
+  z-index: 2;
 }
 
 .petal-particle {
@@ -707,6 +708,13 @@ html, body {
   height: 100%;
   object-fit: cover;
   filter: drop-shadow(0 6px 12px rgba(25, 0, 5, 0.35));
+  transform-origin: 50% 70%;
+  animation: flowerSway 5s ease-in-out infinite;
+}
+
+@keyframes flowerSway {
+  0%, 100% { transform: rotate(-1.5deg) translateY(0); }
+  50% { transform: rotate(1.5deg) translateY(-3px); }
 }
 
 
@@ -1147,27 +1155,19 @@ html, body {
   height: 100%;
   object-fit: contain;
   filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.35));
+  transform-origin: 50% 80%;
+  animation: flowerSway 4s ease-in-out infinite;
 }
 
 .cd-caption {
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 7px;
-  padding: 4px 10px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(200, 163, 85, 0.45);
-  border-radius: 12px;
+  gap: 5px;
+  margin-top: 6px;
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
   width: fit-content;
-  max-width: 172px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(4px);
-  transition: all 0.25s ease;
-}
-
-.cd-jewel-case:hover .cd-caption {
-  background: rgba(255, 255, 255, 0.98);
-  border-color: var(--burgundy-main);
 }
 
 .cd-pulse-dot {
@@ -1175,7 +1175,6 @@ html, body {
   height: 6px;
   border-radius: 50%;
   background: var(--burgundy-main);
-  flex-shrink: 0;
 }
 
 .cd-jewel-case.playing .cd-pulse-dot {
@@ -1184,14 +1183,9 @@ html, body {
 }
 
 .cd-track-text {
-  font-family: var(--font-sans);
   font-size: 9.5px;
-  font-weight: 600;
-  color: var(--burgundy-deep);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  letter-spacing: 0.3px;
+  font-weight: 500;
+  color: var(--text-muted);
 }
 
 
@@ -2202,6 +2196,21 @@ html, body {
 /* ==========================================================================
    RESPONSIVE ADJUSTMENTS
    ========================================================================== */
+
+@media (max-width: 600px) {
+  .baroque-content,
+  .sage-plaque-content {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .baroque-names {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+}
 
 @media (max-width: 400px) {
   .envelope-wrapper {
