@@ -1282,10 +1282,18 @@ html, body {
 
 .rsvp-script {
   font-family: var(--font-script);
-  font-size: 44px;
+  font-size: 38px;
   color: #ffffff;
   line-height: 0.95;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.form-hint {
+  min-height: 1.2em;
+  margin-top: 8px;
+  color: var(--burgundy-main);
+  font-size: 12px;
+  text-align: center;
 }
 
 .pocket-action-hint {

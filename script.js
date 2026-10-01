@@ -68,9 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // RSVP Elements
   const rsvpForm = document.getElementById('rsvp-form');
   const rsvpSuccessView = document.getElementById('rsvp-success-view');
-  const rsvpStatusBadge = document.getElementById('rsvp-status-badge');
   const btnRsvpDone = document.getElementById('btn-rsvp-done');
   const successGuestMsg = document.getElementById('success-guest-msg');
+  const messageSheetEndpoint = window.WEDDING_MESSAGE_ENDPOINT || '';
 
   // Lightbox Elements
   const lightboxImg = document.getElementById('lightbox-img');
@@ -278,64 +278,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // =========================================================================
-  // 6. RSVP FORM SUBMISSION & LOCALSTORAGE
+  // 6. GUEST MESSAGE FORM SUBMISSION
   // =========================================================================
-  function checkExistingRsvp() {
-    try {
-      const saved = localStorage.getItem('wedding_rsvp_az');
-      if (saved) {
-        const data = JSON.parse(saved);
-        if (rsvpStatusBadge) {
-          rsvpStatusBadge.classList.remove('hidden');
-          rsvpStatusBadge.innerHTML = `<strong>RSVP Recorded:</strong> ${data.guestName} (${data.attendance === 'attending' ? 'Attending with ' + data.guestCount + ' guests' : 'Regretfully Declines'})`;
-        }
-        if (document.getElementById('guest-name')) document.getElementById('guest-name').value = data.guestName || '';
-        if (document.getElementById('guest-count')) document.getElementById('guest-count').value = data.guestCount || '2';
-        if (document.getElementById('guest-message')) document.getElementById('guest-message').value = data.message || '';
-      }
-    } catch (e) {
-      console.warn('LocalStorage error', e);
-    }
-  }
-  checkExistingRsvp();
-
   if (rsvpForm) {
-    rsvpForm.addEventListener('submit', (e) => {
+    rsvpForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const guestName = document.getElementById('guest-name').value.trim();
-      const attendance = document.querySelector('input[name="attendance"]:checked').value;
-      const guestCount = document.getElementById('guest-count').value;
       const message = document.getElementById('guest-message').value.trim();
+      const status = document.getElementById('message-form-status');
+      const submitButton = document.getElementById('btn-submit-rsvp');
 
-      const rsvpData = {
-        guestName,
-        attendance,
-        guestCount: attendance === 'attending' ? guestCount : 0,
-        message,
-        timestamp: new Date().toISOString()
-      };
-
-      try {
-        localStorage.setItem('wedding_rsvp_az', JSON.stringify(rsvpData));
-      } catch (err) {
-        console.warn('Failed to save to localStorage', err);
+      if (!messageSheetEndpoint || messageSheetEndpoint.includes('PASTE_')) {
+        status.textContent = 'The message form is being set up. Please try again soon.';
+        return;
       }
 
-      // Confetti Burst Celebration
-      triggerConfetti();
+      submitButton.disabled = true;
+      submitButton.querySelector('span').textContent = 'Sending...';
+      status.textContent = '';
 
-      // Show Success View
-      rsvpForm.classList.add('hidden');
-      if (rsvpSuccessView) {
+      try {
+        await fetch(messageSheetEndpoint, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: new URLSearchParams({ name: guestName, message })
+        });
+
+        rsvpForm.classList.add('hidden');
         rsvpSuccessView.classList.remove('hidden');
-        if (successGuestMsg) {
-          if (attendance === 'attending') {
-            successGuestMsg.textContent = `Thank you, ${guestName}! We are overjoyed to celebrate our special day with you at Hilton Pyramids Golf Hotel!`;
-          } else {
-            successGuestMsg.textContent = `Thank you, ${guestName}. We will deeply miss you on our wedding day, but we feel your love and prayers!`;
-          }
-        }
+        successGuestMsg.textContent = `Thank you, ${guestName}! Your message has been sent to Abdelrahman & Zad.`;
+        triggerConfetti();
+      } catch (error) {
+        console.error('Could not send guest message', error);
+        status.textContent = 'We could not send your message. Please check your connection and try again.';
+      } finally {
+        submitButton.disabled = false;
+        submitButton.querySelector('span').textContent = 'Send Message';
       }
     });
   }
@@ -347,7 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         rsvpForm.classList.remove('hidden');
         rsvpSuccessView.classList.add('hidden');
-        checkExistingRsvp();
+        rsvpForm.reset();
       }, 400);
     });
   }

@@ -1257,7 +1257,7 @@ html, body {
 
 
 /* --------------------------------------------------------------------------
-   COLLAGE ELEMENT 7: "KINDLY RSVP" BURGUNDY CARD POCKET
+   COLLAGE ELEMENT 7: MESSAGE BURGUNDY CARD POCKET
    -------------------------------------------------------------------------- */
 .rsvp-pocket-card {
   top: 690px;
@@ -1318,10 +1318,18 @@ html, body {
 
 .rsvp-script {
   font-family: var(--font-script);
-  font-size: 44px;
+  font-size: 38px;
   color: #ffffff;
   line-height: 0.95;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.form-hint {
+  min-height: 1.2em;
+  margin-top: 8px;
+  color: var(--burgundy-main);
+  font-size: 12px;
+  text-align: center;
 }
 
 .pocket-action-hint {
@@ -2708,19 +2716,19 @@ html, body {
           </div>
 
 
-          <!-- 7. "KINDLY RSVP" BURGUNDY CARD POCKET (Lower Right) -->
-          <div class="collage-item rsvp-pocket-card" id="btn-open-rsvp" title="Click to RSVP">
+          <!-- 7. MESSAGE BURGUNDY CARD POCKET (Lower Right) -->
+          <div class="collage-item rsvp-pocket-card" id="btn-open-rsvp" title="Leave us a message">
             <div class="pocket-shape">
               <!-- Top Thumb Notch Cutout -->
               <div class="thumb-notch"></div>
               
               <div class="pocket-text">
-                <span class="rsvp-sub">Kindly</span>
-                <span class="rsvp-script">Rsvp</span>
+                <span class="rsvp-sub">Leave us a</span>
+                <span class="rsvp-script">Message</span>
               </div>
               
               <div class="pocket-action-hint">
-                <span>Confirm Attendance</span>
+                <span>Send us a note</span>
               </div>
             </div>
 
@@ -2803,10 +2811,9 @@ html, body {
         <footer class="collage-footer-actions">
           <button class="footer-btn btn-primary" id="footer-btn-rsvp">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              <path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 8.4 8.4 0 0 1-4-.99L3 21l1.99-5.5A8.4 8.4 0 0 1 4 11.5 8.5 8.5 0 0 1 12.5 3h.5a8.5 8.5 0 0 1 8 8v.5Z"></path>
             </svg>
-            <span>RSVP Now</span>
+            <span>Leave a Message</span>
           </button>
           
           <button class="footer-btn btn-secondary" id="footer-btn-details">
@@ -2846,74 +2853,39 @@ html, body {
        MODALS & POPUPS
        ============================================== -->
 
-  <!-- 1. RSVP MODAL -->
+  <!-- 1. LEAVE A MESSAGE MODAL -->
   <div class="modal-overlay" id="modal-rsvp" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="modal-card">
-      <button class="btn-modal-close" aria-label="Close RSVP Modal">&times;</button>
+      <button class="btn-modal-close" aria-label="Close message form">&times;</button>
       
       <div class="modal-header">
         <span class="modal-crest">AZ</span>
-        <h2 class="modal-title">Kindly RSVP</h2>
-        <p class="modal-subtitle">Please respond before October 15, 2026</p>
-      </div>
-
-      <div id="rsvp-status-badge" class="rsvp-status-badge hidden">
-        <span>You have already submitted an RSVP. You can update it below:</span>
+        <h2 class="modal-title">Leave a Message</h2>
+        <p class="modal-subtitle">We'd love to hear from you</p>
       </div>
 
       <form id="rsvp-form" class="modal-form">
         <div class="form-group">
-          <label for="guest-name">Your Full Name(s) *</label>
-          <input type="text" id="guest-name" name="guest_name" required placeholder="e.g. Karim & Salma" class="form-input">
+          <label for="guest-name">Your Name *</label>
+          <input type="text" id="guest-name" name="guest_name" required maxlength="120" autocomplete="name" placeholder="Your name" class="form-input">
         </div>
 
         <div class="form-group">
-          <label>Will you be celebrating with us? *</label>
-          <div class="radio-cards">
-            <label class="radio-card">
-              <input type="radio" name="attendance" value="attending" checked required>
-              <div class="radio-card-content">
-                <span class="rc-icon">🥂</span>
-                <span class="rc-title">Joyfully Accepts</span>
-                <span class="rc-desc">Can't wait to celebrate!</span>
-              </div>
-            </label>
-            <label class="radio-card">
-              <input type="radio" name="attendance" value="declined" required>
-              <div class="radio-card-content">
-                <span class="rc-icon">💌</span>
-                <span class="rc-title">Regretfully Declines</span>
-                <span class="rc-desc">Celebrating in spirit</span>
-              </div>
-            </label>
-          </div>
-        </div>
-
-        <div class="form-group" id="guests-count-group">
-          <label for="guest-count">Number of Guests</label>
-          <select id="guest-count" name="guest_count" class="form-select">
-            <option value="1">1 Person</option>
-            <option value="2" selected>2 Persons</option>
-            <option value="3">3 Persons</option>
-            <option value="4">4 Persons</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="guest-message">Wishes or Notes for Abdelrahman &amp; Zad</label>
-          <textarea id="guest-message" name="guest_message" rows="3" placeholder="Leave a sweet message or dietary request..." class="form-textarea"></textarea>
+          <label for="guest-message">Your Message *</label>
+          <textarea id="guest-message" name="guest_message" rows="4" required maxlength="2000" placeholder="Write a note for Abdelrahman &amp; Zad..." class="form-textarea"></textarea>
         </div>
 
         <button type="submit" class="btn-submit-rsvp" id="btn-submit-rsvp">
-          <span>Confirm RSVP</span>
+          <span>Send Message</span>
         </button>
+        <p id="message-form-status" class="form-hint" role="status" aria-live="polite"></p>
       </form>
 
       <!-- Confirmation Screen (shown after submit) -->
       <div id="rsvp-success-view" class="rsvp-success-view hidden">
         <div class="success-icon">✨</div>
         <h3 class="success-title">Thank You!</h3>
-        <p class="success-msg" id="success-guest-msg">Your response has been saved. We are thrilled to celebrate with you!</p>
+        <p class="success-msg" id="success-guest-msg">Your message has been sent. Thank you for sharing it with us!</p>
         <button type="button" class="btn-primary btn-modal-done" id="btn-rsvp-done">Done</button>
       </div>
 
@@ -3112,9 +3084,10 @@ html, body {
     <source src="assets/young_and_beautiful.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Floating Confetti Canvas for RSVP Celebration -->
+  <!-- Floating Confetti Canvas for message thank-you -->
   <canvas id="confetti-canvas"></canvas>
 
+  <script src="message-config.js"></script>
   <script>
 /**
  * WEDDING INVITATION INTERACTIVE SCRIPT
@@ -3187,9 +3160,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // RSVP Elements
   const rsvpForm = document.getElementById('rsvp-form');
   const rsvpSuccessView = document.getElementById('rsvp-success-view');
-  const rsvpStatusBadge = document.getElementById('rsvp-status-badge');
   const btnRsvpDone = document.getElementById('btn-rsvp-done');
   const successGuestMsg = document.getElementById('success-guest-msg');
+  const messageSheetEndpoint = window.WEDDING_MESSAGE_ENDPOINT || '';
 
   // Lightbox Elements
   const lightboxImg = document.getElementById('lightbox-img');
@@ -3492,64 +3465,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // =========================================================================
-  // 6. RSVP FORM SUBMISSION & LOCALSTORAGE
+  // 6. GUEST MESSAGE FORM SUBMISSION
   // =========================================================================
-  function checkExistingRsvp() {
-    try {
-      const saved = localStorage.getItem('wedding_rsvp_az');
-      if (saved) {
-        const data = JSON.parse(saved);
-        if (rsvpStatusBadge) {
-          rsvpStatusBadge.classList.remove('hidden');
-          rsvpStatusBadge.innerHTML = `<strong>RSVP Recorded:</strong> ${data.guestName} (${data.attendance === 'attending' ? 'Attending with ' + data.guestCount + ' guests' : 'Regretfully Declines'})`;
-        }
-        if (document.getElementById('guest-name')) document.getElementById('guest-name').value = data.guestName || '';
-        if (document.getElementById('guest-count')) document.getElementById('guest-count').value = data.guestCount || '2';
-        if (document.getElementById('guest-message')) document.getElementById('guest-message').value = data.message || '';
-      }
-    } catch (e) {
-      console.warn('LocalStorage error', e);
-    }
-  }
-  checkExistingRsvp();
-
   if (rsvpForm) {
-    rsvpForm.addEventListener('submit', (e) => {
+    rsvpForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const guestName = document.getElementById('guest-name').value.trim();
-      const attendance = document.querySelector('input[name="attendance"]:checked').value;
-      const guestCount = document.getElementById('guest-count').value;
       const message = document.getElementById('guest-message').value.trim();
+      const status = document.getElementById('message-form-status');
+      const submitButton = document.getElementById('btn-submit-rsvp');
 
-      const rsvpData = {
-        guestName,
-        attendance,
-        guestCount: attendance === 'attending' ? guestCount : 0,
-        message,
-        timestamp: new Date().toISOString()
-      };
-
-      try {
-        localStorage.setItem('wedding_rsvp_az', JSON.stringify(rsvpData));
-      } catch (err) {
-        console.warn('Failed to save to localStorage', err);
+      if (!messageSheetEndpoint || messageSheetEndpoint.includes('PASTE_')) {
+        status.textContent = 'The message form is being set up. Please try again soon.';
+        return;
       }
 
-      // Confetti Burst Celebration
-      triggerConfetti();
+      submitButton.disabled = true;
+      submitButton.querySelector('span').textContent = 'Sending...';
+      status.textContent = '';
 
-      // Show Success View
-      rsvpForm.classList.add('hidden');
-      if (rsvpSuccessView) {
+      try {
+        await fetch(messageSheetEndpoint, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: new URLSearchParams({ name: guestName, message })
+        });
+
+        rsvpForm.classList.add('hidden');
         rsvpSuccessView.classList.remove('hidden');
-        if (successGuestMsg) {
-          if (attendance === 'attending') {
-            successGuestMsg.textContent = `Thank you, ${guestName}! We are overjoyed to celebrate our special day with you at Hilton Pyramids Golf Hotel!`;
-          } else {
-            successGuestMsg.textContent = `Thank you, ${guestName}. We will deeply miss you on our wedding day, but we feel your love and prayers!`;
-          }
-        }
+        successGuestMsg.textContent = `Thank you, ${guestName}! Your message has been sent to Abdelrahman & Zad.`;
+        triggerConfetti();
+      } catch (error) {
+        console.error('Could not send guest message', error);
+        status.textContent = 'We could not send your message. Please check your connection and try again.';
+      } finally {
+        submitButton.disabled = false;
+        submitButton.querySelector('span').textContent = 'Send Message';
       }
     });
   }
@@ -3561,7 +3513,7 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         rsvpForm.classList.remove('hidden');
         rsvpSuccessView.classList.add('hidden');
-        checkExistingRsvp();
+        rsvpForm.reset();
       }, 400);
     });
   }
