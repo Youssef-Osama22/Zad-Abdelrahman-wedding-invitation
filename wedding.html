@@ -195,6 +195,7 @@ html, body {
 .name-line {
   display: block;
   white-space: nowrap;
+  text-transform: capitalize;
 }
 
 .line-1 {
@@ -392,9 +393,12 @@ html, body {
 }
 
 .seal-initials {
-  font-family: var(--font-script);
-  font-size: 22px;
+  font-family: var(--font-serif-title);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
   color: #ebdfcb;
+  text-transform: uppercase;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8), -0.5px -0.5px 0 rgba(255, 255, 255, 0.25);
   transform: translateY(-1px);
 }
@@ -620,6 +624,22 @@ html, body {
   user-select: none;
 }
 
+/* Keep text balanced in each invitation frame. */
+.baroque-content,
+.sage-plaque-content,
+.cream-date-card,
+.pocket-shape,
+.polaroid-caption {
+  text-align: center;
+}
+
+.baroque-content,
+.sage-plaque-content,
+.pocket-shape {
+  align-items: center;
+  justify-content: center;
+}
+
 
 /* --------------------------------------------------------------------------
    COLLAGE ELEMENT 1: TOP OPEN ENVELOPE WITH PEEKING PHOTOS & FLORALS
@@ -749,15 +769,17 @@ html, body {
 }
 
 .baroque-content {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   z-index: 2;
   width: 100%;
-  height: 100%;
+  height: 66%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 30px 20px;
+  padding: 14px 20px;
   text-align: center;
   color: #f7eedf;
 }
@@ -784,6 +806,9 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
   line-height: 0.95;
 }
 
@@ -793,6 +818,7 @@ html, body {
   font-weight: 400;
   color: #fffaf0;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  text-transform: capitalize;
 }
 
 .b-ampersand {
@@ -1538,6 +1564,42 @@ html, body {
   height: 100%;
   object-fit: contain;
   filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.18));
+}
+
+/* Small floral clusters soften the open spaces between collage frames. */
+.collage-flower {
+  width: 58px;
+  height: 58px;
+  pointer-events: none;
+  z-index: 18;
+  opacity: 0.92;
+}
+
+.collage-flower img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 7px rgba(45, 8, 16, 0.2));
+}
+
+.flower-gap-upper {
+  top: 620px;
+  left: 44%;
+  width: 52px;
+  height: 52px;
+}
+
+.flower-gap-middle {
+  top: 828px;
+  left: 43%;
+}
+
+.flower-gap-lower {
+  top: 1090px;
+  left: 67%;
+  width: 54px;
+  height: 54px;
 }
 
 
@@ -2723,6 +2785,16 @@ html, body {
           </div>
           <div class="collage-item floating-butterfly bf-mid-left">
             <img src="assets/white_butterfly.png" alt="Butterfly">
+          </div>
+
+          <div class="collage-item collage-flower flower-gap-upper" aria-hidden="true">
+            <img src="assets/burgundy_flowers.png" alt="">
+          </div>
+          <div class="collage-item collage-flower flower-gap-middle" aria-hidden="true">
+            <img src="assets/burgundy_flowers.png" alt="">
+          </div>
+          <div class="collage-item collage-flower flower-gap-lower" aria-hidden="true">
+            <img src="assets/burgundy_flowers.png" alt="">
           </div>
 
         </div> <!-- /collage-canvas -->

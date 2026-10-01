@@ -45,9 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const cdPlayerModule = document.getElementById('cd-player-module');
   const compactDisc = document.getElementById('compact-disc');
   const cdStatusText = document.getElementById('cd-status-text');
-  const weddingAudio = new Audio('assets/young_and_beautiful.mp3');
-  weddingAudio.loop = true;
-  weddingAudio.preload = 'auto';
+  const weddingAudio = document.getElementById('wedding-audio');
   const countdownText = document.getElementById('countdown-text');
 
   // Modals
