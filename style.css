@@ -1550,6 +1550,7 @@ html, body {
 }
 
 .footer-btn {
+  text-decoration: none;
   flex: 1;
   display: flex;
   align-items: center;
